@@ -1,6 +1,3 @@
-# Refer to Databutton -> Log in -> Create New App -> Start with Own Chat GPT template
-# Thanks to Trygve / Martin
-import databutton as db
 import pandas as pd
 import streamlit as st
 

@@ -1,4 +1,3 @@
-import databutton as db
 import streamlit as st
 from langchain.embeddings.cohere import CohereEmbeddings
 from langchain.llms import Cohere
@@ -17,14 +16,14 @@ from df_chat import user_message, bot_message
 
 st.set_page_config("Multilingual Chat Bot 🤖", layout="centered")
 
-cohere_api_key = db.secrets.get(name="secret-key")
+cohere_api_key = os.getenv("520wGU9pocXX62qMYU9o8AzHTimP8deSO3C2C65P")
 
 st.title("Multilingual Chat Bot 🤖")
 st.info(
     "For your personal data!"
 )
 
-opt = st.radio("--", options=["Try the demo!", "Upload-own-file"])
+opt = st.radio("--", options=["Upload-own-file"])
 
 pages = None
 if opt == "Upload-own-file":
@@ -33,18 +32,16 @@ if opt == "Upload-own-file":
         "**Upload a pdf or txt file :**",
         type=["pdf", "txt"],
     )
+    st.text("Quick Prompts to try (English | Korean):")
+    st.code("What is the key lesson from this article?")
+    st.code("이 기사의 핵심은 무엇입니까?")
     if uploaded_file:
         if uploaded_file.name.endswith(".txt"):
             doc = parse_txt(uploaded_file)
         else:
             doc = parse_pdf(uploaded_file)
         pages = text_to_docs(doc)
-else:
-    st.text("Quick Prompts to try (English | Korean):")
-    
-    st.code("What is the key lesson from this article?")
-    st.code("이 기사의 핵심은 무엇입니까?")
-    pages = load_default_pdf()
+
 
 
 page_holder = st.empty()

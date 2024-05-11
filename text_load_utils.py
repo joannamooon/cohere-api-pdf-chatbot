@@ -1,4 +1,3 @@
-import databutton as db
 import streamlit as st
 
 import re
@@ -10,7 +9,7 @@ from pypdf import PdfReader
 from langchain.docstore.document import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
-
+import os
 import tempfile
 
 
@@ -57,7 +56,6 @@ def text_to_docs(text: str) -> List[Document]:
             doc = Document(
                 page_content=chunk, metadata={"page": doc.metadata["page"], "chunk": i}
             )
-            # Add sources a metadata
             doc.metadata["source"] = f"{doc.metadata['page']}-{doc.metadata['chunk']}"
             doc_chunks.append(doc)
     return doc_chunks
@@ -65,9 +63,10 @@ def text_to_docs(text: str) -> List[Document]:
 
 @st.cache_data
 def load_default_pdf():
-    data = db.storage.binary.get(key="steve-jobs-commencement-pdf")
-    with tempfile.NamedTemporaryFile("wb") as f:
-        f.write(data)
-        loader = PyPDFLoader(f.name)
-        pages = loader.load_and_split()
-        return pages
+    file_path = os.path.join(os.getcwd(), "data", "cohere-test.pdf")
+    with open(file_path, "rb") as f:
+        with tempfile.NamedTemporaryFile("wb", delete=False) as temp_file:
+            temp_file.write(f.read())
+            loader = PyPDFLoader(temp_file.name)
+            pages = loader.load_and_split()
+    return pages
