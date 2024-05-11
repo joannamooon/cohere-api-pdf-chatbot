@@ -16,7 +16,7 @@ from df_chat import user_message, bot_message
 
 st.set_page_config("Multilingual Chat Bot 🤖", layout="centered")
 
-cohere_api_key = os.getenv("520wGU9pocXX62qMYU9o8AzHTimP8deSO3C2C65P")
+cohere_api_key = os.getenv("COHERE_API_KEY")
 
 st.title("Multilingual Chat Bot 🤖")
 st.info(
