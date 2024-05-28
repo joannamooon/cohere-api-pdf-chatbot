@@ -4,3 +4,4 @@ langchain
 qdrant-client
 pypdf
 cohere
+langchain-community
